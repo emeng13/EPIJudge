@@ -1,10 +1,32 @@
+#include <algorithm>
 #include <vector>
 #include "test_framework/generic_test.h"
+using std::find;
 using std::vector;
 
+void powerSet(vector<int> set, vector<vector<int>>* resultPtr) {
+  if (set.size() == 0) {
+    return;
+  } 
+  else {
+    if (std::find(resultPtr->begin(), resultPtr->end(), set) == resultPtr->end()) {
+      resultPtr->emplace_back(set);
+    }
+
+    for (int i = 0; i < set.size(); i++) {
+      vector<int> minusSet = set;
+      minusSet.erase(minusSet.begin() + i);
+
+      powerSet(minusSet, resultPtr);
+    }
+  } 
+}
+
 vector<vector<int>> GeneratePowerSet(const vector<int>& input_set) {
-  // TODO - you fill in here.
-  return {};
+  vector<vector<int>> result;
+  powerSet(input_set, &result);
+  result.emplace_back(vector<int>());
+  return result;
 }
 
 int main(int argc, char* argv[]) {
