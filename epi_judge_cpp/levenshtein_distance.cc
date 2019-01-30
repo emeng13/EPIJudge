@@ -4,9 +4,37 @@
 using std::string;
 using std::vector;
 
+int min(int a, int b, int c) {
+  if (a <= b && a <= c) {
+    return a;
+  } else if (b <= a && b <= c) {
+    return b;
+  } else {
+    return c;
+  }
+}
+
 int LevenshteinDistance(const string& A, const string& B) {
-  // TODO - you fill in here.
-  return 0;
+  int m = A.length();
+  int n = B.length();
+
+  std::cout << A.length() + B.length() << std::endl;
+
+  vector<vector<int>> distances(m+1, vector<int> (n+1, 0));
+  for (int i = 0; i <= m; i++) {
+    for (int j = 0; j <= n; j++) {
+      if (i == 0) {
+        distances[i][j] = j;
+      } else if (j == 0) {
+        distances[i][j] = i;
+      } else {
+        distances[i][j] = min(distances[i-1][j-1] + (A.at(i-1) == B.at(j-1) ? 0 : 1),
+                              distances[i][j-1] + 1,
+                              distances[i-1][j] + 1);
+      }
+    }
+  }
+  return distances[m][n];
 }
 
 int main(int argc, char* argv[]) {
