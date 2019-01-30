@@ -12,8 +12,8 @@ int ComputeBinomialCoefficient(int n, int k) {
     arr.push_back(1);
   }
 
-  for (int i = 1; i <= n - k; i++) {
-    for (int j = 1; j <= k; j++) {
+  for (int i = 1; i < n; i++) {
+    for (int j = std::min(i, k); j > 0; j--) {
       arr[j] = arr[j] + arr[j-1];
     }
   }
