@@ -18,8 +18,6 @@ int LevenshteinDistance(const string& A, const string& B) {
   int m = A.length();
   int n = B.length();
 
-  std::cout << A.length() + B.length() << std::endl;
-
   vector<vector<int>> distances(m+1, vector<int> (n+1, 0));
   for (int i = 0; i <= m; i++) {
     for (int j = 0; j <= n; j++) {

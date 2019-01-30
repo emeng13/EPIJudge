@@ -1,8 +1,6 @@
 #include <vector>
 #include "test_framework/generic_test.h"
 using std::vector;
-using std::cout;
-using std::endl;
 
 int NumCombinationsForFinalScore(int final_score,
                                  const vector<int>& individual_play_scores) {
