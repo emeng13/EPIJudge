@@ -4,9 +4,27 @@
 #include "test_framework/timed_executor.h"
 using std::vector;
 
+// O(log n) time O(1) space
 int SearchEntryEqualToItsIndex(const vector<int>& A) {
-  // TODO - you fill in here.
-  return 0;
+  // run normal binary search except change conditions to comparing A[mid] and mid
+  // given that there are no duplicates, the following two hold true since there won't be enough numbers between each boundary and mid to satisfy A[mid] != mid
+  // if A[mid] < mid then it is impossible for any value before mid to be equal to it's index
+  // if A[mid] > mid then it is impossible for any value after mid to be equal to it's index
+
+  int low = 0;
+  int high = A.size() - 1;
+
+  while (low <= high) {
+    int mid = (low + high) / 2;
+    if (A[mid] == mid) {
+      return mid;
+    } else if (A[mid] < mid) {
+      low = mid + 1;
+    } else {
+      high = mid - 1;
+    }
+  }
+  return -1;
 }
 void SearchEntryEqualToItsIndexWrapper(TimedExecutor& executor,
                                        const vector<int>& A) {

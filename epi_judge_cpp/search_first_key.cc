@@ -2,8 +2,13 @@
 #include "test_framework/generic_test.h"
 using std::vector;
 
-// O (log n) time O(1) space
+// O(log n) time O(1) space
 int SearchFirstOfK(const vector<int>& A, int k) {
+  // approach 1
+  // O(n) time O(1) space
+  // run binary search until A[mid] = k then iterate backwards until no more k
+
+  // approach 2
   // run binary search normally except instead of return mid when A[mid] = k, track lastFound and continue searching with high = mid - 1
   // while loop bound should be low <= high
   // when loop breaks, lastFound should hold first occurrence of k
