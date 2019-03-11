@@ -14,10 +14,59 @@ struct Coordinate {
 
   int x, y;
 };
+
+bool isValid(const vector<vector<Color>>* maze, int x, int y) {
+  int maxX = maze->size();
+  int maxY = (*maze)[0].size();
+
+  if (x < 0 || x >= maxX || y < 0 || y >= maxY) {
+    return false;
+  }
+
+  if ((*maze)[x][y] == kBlack) {
+    return false;
+  }
+
+  return true;
+}
+
+bool findPath(vector<vector<Color>>* maze, const Coordinate& curr, const Coordinate& end, vector<Coordinate>* path) {
+  // validate pixel
+  if (!isValid(maze, curr.x, curr.y)) {
+    return false;
+  }
+
+  // add curr pixel to path and mark as visited
+  path->push_back(curr);
+  (*maze)[curr.x][curr.y] = kBlack;
+  if (curr == end) {
+    return true;
+  }
+
+  // try DFS on adjacent pixels
+  if (findPath(maze, Coordinate{curr.x - 1, curr.y}, end, path)) {
+    return true;
+  }
+  if (findPath(maze, Coordinate{curr.x, curr.y + 1}, end, path)) {
+    return true;
+  }
+  if (findPath(maze, Coordinate{curr.x + 1, curr.y}, end, path)) {
+    return true;
+  }
+  if (findPath(maze, Coordinate{curr.x, curr.y - 1}, end, path)) {
+    return true;
+  }
+
+  // backtrack
+  path->pop_back();
+  return false;
+}
+
 vector<Coordinate> SearchMaze(vector<vector<Color>> maze, const Coordinate& s,
                               const Coordinate& e) {
-  // TODO - you fill in here.
-  return {};
+  vector<Coordinate> path;
+  findPath(&maze, s, e, &path);
+  return path;
 }
 template <>
 struct SerializationTraits<Color> : SerializationTraits<int> {
